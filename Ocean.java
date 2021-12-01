@@ -52,13 +52,13 @@ public class Ocean {
     width = i;
     height = j;
     starveTime = sT;
-    currentArr = new Cell[width][height];
-    nextArr = new Cell[width][height];
+    currentArr = new Cell[height][width];
+    nextArr = new Cell[height][width];
 
 
     for(int h = 0; h < height; h++) {
       for(int w = 0; w < width; w++) {
-        currentArr[w][h] = new Cell();
+        currentArr[h][w] = new Cell();
       }
     }
   }
@@ -102,8 +102,8 @@ public class Ocean {
 
   public void addFish(int x, int y) {
     // Your solution here.
-    if(currentArr[x][y].getType() == EMPTY) {
-      currentArr[x][y] = new Fish();
+    if(currentArr[y][x].getType() == EMPTY) {
+      currentArr[y][x] = new Fish();
     }
 
   }
@@ -118,8 +118,8 @@ public class Ocean {
 
   public void addShark(int x, int y) {
     // Your solution here.
-    if(currentArr[x][y].getType() == EMPTY) {
-      currentArr[x][y] =  new Shark();
+    if(currentArr[y][x].getType() == EMPTY) {
+      currentArr[y][x] =  new Shark();
     }
   }
 
@@ -131,7 +131,7 @@ public class Ocean {
    */
 
   public int cellContents(int x, int y) {
-    return currentArr[x][y].getType();
+    return currentArr[y][x].getType();
   }
 
   /**
@@ -179,14 +179,14 @@ public class Ocean {
 
     // 7) If a cell is empty, at least two of its neighbors are fish, and at most one
     // of its neighbors is a shark, then a new fish is born in that cell.
-    for(int i = 0; i < currentArr.length; i++) {
-      for(int j = 0; j < currentArr[0].length; j++) {
-        if(currentArr[i][j].getType() == FISH) {
-          int fish = checkFish(currentArr, i, j);
-        }
-      }
-    }
-
+//    for(int i = 0; i < currentArr.length; i++) {
+//      for(int j = 0; j < currentArr[0].length; j++) {
+//        if(currentArr[i][j].getType() == FISH) {
+//          int fish = checkFish(currentArr, i, j);
+//        }
+//      }
+//    }
+    System.out.println("At cell 3, 6, there are " + checkFish(currentArr, 44, 35) + " fish surrounding" );
 
 
     // 8) If a cell is empty, at least two of its neighbors are fish, and at least two
@@ -205,49 +205,82 @@ public class Ocean {
     return newOcean;
   }
 
-  public int checkFish(Cell[][] arr, int x, int y) {
+  public int checkFish(Cell[][] arr, final int x, final int y) {
+    //JAVA 2D ARRAYS ARE [Y][X] down is +, right is +, up is -, left is -
     int fishCounter = 0;
 
 
 
+    System.out.println("L: At " + normalizeX(x - 1) + " , " + y + "there is a " + arr[y][normalizeX(x - 1)].getType());
+    if(arr[y][normalizeX(x - 1)].getType() == FISH) { //Checks left for fish
+      fishCounter++;
+      System.out.println("L: Fish found! at" + normalizeX(x - 1) + " " + y);
+    }
 
-    if(arr[normalizeX(x - 1)][y].getType() == FISH) { //Checks left for fish
+    System.out.println("R: At " + normalizeX(x + 1) + " , " + y + "there is a " + arr[y][normalizeX(x + 1)].getType());
+    if(arr[y][normalizeX(x + 1)].getType() == FISH) { //Checks right for fish
       fishCounter++;
-      System.out.print("1 " + fishCounter);
+      //System.out.print("R " + fishCounter);
+        System.out.println("R: Fish found! at" + normalizeX(x + 1) + " " + y);
+
     }
-    if(arr[normalizeX(x + 1)][y].getType() == FISH) { //Checks right for fish
+
+    System.out.println("U: At " + x + " , " + normalizeY(y - 1) + "there is a " + arr[y][normalizeX(x - 1)].getType());
+    if(arr[normalizeY(y - 1)][normalizeX(x)].getType() == FISH) { //Checks up for fish
       fishCounter++;
-      System.out.print("2 " + fishCounter);
+      //System.out.print("U " + fishCounter);
+        System.out.println("U: Fish found! at" + normalizeX(x) + " " + normalizeY(y - 1));
+
     }
-    if(arr[normalizeX(x)][normalizeY(y - 1)].getType() == FISH) { //Checks up for fish
+
+    System.out.println("D: At " + x + " , " + normalizeY(y + 1) + "there is a " + arr[normalizeY(y + 1)][normalizeX(x)].getType());
+    if(arr[normalizeY(y + 1)][normalizeX(x)].getType() == FISH) { //Checks down for fish
       fishCounter++;
-      System.out.print("3 " + fishCounter);
+      //System.out.print("D " + fishCounter);
+        System.out.println("D: Fish found! at" + normalizeX(x) + " " + normalizeY(y + 1));
+
     }
-    if(arr[normalizeX(x)][normalizeY(y + 1)].getType() == FISH) { //Checks down for fish
+
+    System.out.println("uL: At " + normalizeX(x - 1) + " , " + normalizeY(y - 1) + "there is a " + arr[normalizeY(y - 1)][normalizeX(x - 1)].getType());
+    if(arr[normalizeY(y - 1)][normalizeX(x - 1)].getType() == FISH) { //Checks up-left for fish
       fishCounter++;
-      System.out.print("4 " + fishCounter);
+      //System.out.print("uL " + fishCounter);
+        System.out.println("uL: Fish found! at" + normalizeX(x - 1) + " " + normalizeY(y - 1));
+
     }
-    if(arr[normalizeX(x + 1)][y].getType() == FISH) { //Checks right for fish
+
+    System.out.println("uR: At " + normalizeX(x + 1) + " , " + normalizeY(y - 1) + "there is a " + arr[normalizeY(y - 1)][normalizeX(x + 1)].getType());
+    if(arr[normalizeY(y - 1)][normalizeX(x + 1)].getType() == FISH) { //Checks up-right for fish
       fishCounter++;
-      System.out.print("5 " + fishCounter);
+      //System.out.print("uR " + fishCounter);
+        System.out.println("uR: Fish found! at" + normalizeX(x + 1) + " " + normalizeY(y - 1));
+
     }
-    if(arr[normalizeX(x + 1)][y].getType() == FISH) { //Checks right for fish
+
+    System.out.println("dL: At " + normalizeX(x - 1) + " , " + normalizeY(y + 1) + "there is a " + arr[normalizeY(y + 1)][normalizeX(x - 1)].getType());
+    if(arr[normalizeY(y + 1)][normalizeX(x - 1)].getType() == FISH) { //Checks down-left for fish
       fishCounter++;
-      System.out.print("6 " + fishCounter);
+      //System.out.print("dL " + fishCounter);
+        System.out.println("dL: Fish found! at" + normalizeX(x - 1) + " " + normalizeY(y + 1));
+
     }
-    if(arr[normalizeX(x + 1)][y].getType() == FISH) { //Checks right for fish
+
+    System.out.println("dr: At " + normalizeX(x + 1) + " , " + normalizeY(y + 1) + "there is a " + arr[normalizeY(y - 1)][normalizeX(x + 1)].getType());
+    if(arr[normalizeY(y + 1)][normalizeX(x + 1)].getType() == FISH) { //Checks down-right for fish
       fishCounter++;
-      System.out.print("!! " + fishCounter);
+      //System.out.print("dR " + fishCounter);
+        System.out.println("dr: Fish found! at" + normalizeX(x + 1) + " " + normalizeY(y - 1));
     }
 
     return fishCounter;
   }
 
-  public int normalizeX(int x) {
-    return Math.abs(x) % width;
+  public int normalizeX(int x) { //Link top and bottom edges like torus
+    return Math.floorMod(x, width);
   }
-  public int normalizeY(int y) {
-    return Math.abs(y) % height;
+
+  public int normalizeY(int y) { //Links side edges like torus
+    return Math.floorMod(y, height);
   }
 
 

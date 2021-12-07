@@ -34,7 +34,7 @@ public class SimText {
    */
 
   private static int i = 50;                             // Default ocean width
-  private static int j = 25;                            // Default ocean height
+  private static int j = 37;                            // Default ocean height
   private static int starveTime = 3;           // Default shark starvation time
 
   /**

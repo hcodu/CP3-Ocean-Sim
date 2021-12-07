@@ -225,7 +225,7 @@ class Test1 {
 
             for(int var2 = 0; var2 < this.i; ++var2) {
                 if (this.cell[var2][var1] == 0) {
-                    System.out.print(" ");
+                    System.out.print(".");
                 } else if (this.cell[var2][var1] == -1) {
                     System.out.print("~");
                 } else {

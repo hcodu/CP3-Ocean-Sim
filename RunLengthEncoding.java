@@ -1,5 +1,9 @@
 /* RunLengthEncoding.java */
 
+import DoublyLinkedList.DoublyLinkedList;
+import DoublyLinkedList.DListNode;
+
+
 /**
  *  The RunLengthEncoding class defines an object that run-length encodes an
  *  Ocean object.  Descriptions of the methods you must implement appear below.
@@ -27,8 +31,8 @@ public class RunLengthEncoding {
    *  Define any variables associated with a RunLengthEncoding object here.
    *  These variables MUST be private.
    */
-
-
+  private DoublyLinkedList runs;
+  private int width, height, starveTime;
 
   /**
    *  The following methods are required for Part II.
@@ -40,10 +44,14 @@ public class RunLengthEncoding {
    *  in which sharks starve after starveTime timesteps.
    *  @param i is the width of the ocean.
    *  @param j is the height of the ocean.
-   *  @param starveTime is the number of timesteps sharks survive without food.
+   *  @param "starveTime" is the number of timesteps sharks survive without food.
    */
 
-  public RunLengthEncoding(int i, int j, int starveTime) {
+  public RunLengthEncoding(int i, int j, int sT) {
+    DoublyLinkedList runs = new DoublyLinkedList();
+    starveTime = sT;
+    width = i;
+    height = j;
     // Your solution here.
   }
 
@@ -64,8 +72,36 @@ public class RunLengthEncoding {
    *         The sum of all elements of the runLengths array should be i * j.
    */
 
-  public RunLengthEncoding(int i, int j, int starveTime,
+  public RunLengthEncoding(int i, int j, int sT,
                            int[] runTypes, int[] runLengths) {
+    DoublyLinkedList runs = new DoublyLinkedList();
+    starveTime = sT;
+    width = i;
+    height = j;
+
+    for(int c = 0; c < runTypes.length; c++) {
+
+      if(runTypes[c] == Ocean.EMPTY) {
+        runs.insertBack(new Ocean.Cell(runLengths[c]));
+      }
+      else if(runTypes[c] == Ocean.FISH) {
+        runs.insertBack(new Ocean.Fish(runLengths[c]));
+      }
+      else if(runTypes[c] == Ocean.SHARK) {
+        runs.insertBack(new Ocean.Shark(runLengths[c]));
+      }
+    }
+
+
+    DListNode currNode = runs.front();
+    Ocean.Cell currCell = (Ocean.Cell) currNode.getValue();
+
+    for(int c = 0; c < runs.length(); c++) {
+      currCell = (Ocean.Cell) currNode.getValue();
+      System.out.println(currCell.getType() + "\t" + currCell.quantity);
+      currNode = currNode.getNext();
+    }
+
     // Your solution here.
   }
 
@@ -94,6 +130,7 @@ public class RunLengthEncoding {
 
   public void restartRuns() {
     // Your solution here.
+
   }
 
   /**
@@ -138,6 +175,8 @@ public class RunLengthEncoding {
   public RunLengthEncoding(Ocean sea) {
     // Your solution here, but you should probably leave the following line
     //   at the end.
+
+
     check();
   }
 
@@ -184,6 +223,10 @@ public class RunLengthEncoding {
    */
 
   private void check() {
+  }
+
+  private void printRuns() {
+    System.out.println(runs.toString());
   }
 
 }

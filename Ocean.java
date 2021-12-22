@@ -177,6 +177,7 @@ public class Ocean {
         }
       }
     }
+
     //Vists every cell, applying the logic of Rule #2
     /* 2) If a cell contains a shark, and none of its neighbors is a fish, it gets
      hungrier during the timestep.  If this timestep is the (starveTime + 1)th
@@ -219,7 +220,7 @@ public class Ocean {
       }
     }
 
-    // Visits every cell, applying the logic of Rule #5  FIXXXXXX (DOES NOT WORK)
+    // Visits every cell, applying the logic of Rule #5
     /* 5) If a cell contains a fish, and two or more of its neighbors are sharks, then
      a new shark is born in that cell.  Sharks are well-fed at birth; _after_ they
      are born, they can survive an additional starveTime timesteps without eating.
@@ -464,16 +465,28 @@ public class Ocean {
   }
 
 
-  public class Cell { //represents empty cell
+  public static class Cell extends Object { //represents empty cell
+    int quantity;
+
+    public Cell() {
+      quantity = 1;
+    }
+
+    public Cell(int q) {
+      quantity = q;
+    }
 
     public int getType() {
       return EMPTY;
     }
 
+    public int getQuantity() {
+      return quantity;
+    }
+
     public void increaseHunger() {
       increaseHunger();
     }
-
     public void resetHunger() {
       resetHunger();
     }
@@ -481,12 +494,26 @@ public class Ocean {
       return getHunger();
     }
   } //Defines empty cells, sharks, and fish as objects
-  public class Shark extends Cell {
+  public static class Shark extends Cell {
     private int hunger = 0; // 0 = fed, goes up as timeSteps without food increase
+    int quantity;
+
+    public Shark() {
+      super();
+    }
+
+    public Shark(int q) {
+      super(q);
+    }
+
+    public int getQuantity() {
+      return quantity;
+    }
 
     public void increaseHunger() {
       hunger++;
     }
+
 
     public void resetHunger() {
       hunger = 0;
@@ -499,7 +526,21 @@ public class Ocean {
       return SHARK;
     }
   }
-  public class Fish extends Cell {
+  public static class Fish extends Cell {
+    int quantity;
+
+    public Fish() {
+      super();
+    }
+
+    public Fish(int q) {
+      super(q);
+    }
+
+    public int getQuantity() {
+      return quantity;
+    }
+
     public int getType() {
       return FISH;
     }

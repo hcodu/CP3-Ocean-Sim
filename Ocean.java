@@ -495,7 +495,7 @@ public class Ocean {
     }
   } //Defines empty cells, sharks, and fish as objects
   public static class Shark extends Cell {
-    private int hunger = 0; // 0 = fed, goes up as timeSteps without food increase
+    public int hunger = 0; // 0 = fed, goes up as timeSteps without food increase
     int quantity;
 
     public Shark() {

@@ -1,4 +1,4 @@
-class Main {
+public class Main {
   
   public static void main(String[] args) {
     System.out.println("Testing RLE");
@@ -13,7 +13,24 @@ class Main {
 
     Ocean sea = new Ocean(3, 3, 3);
     RunLengthEncoding runs = new RunLengthEncoding(3,3, 3, arr1, arr2);
-    
+
+    System.out.println(runs.nextRun()[0]);
+    System.out.println(runs.nextRun()[0]);
+    System.out.println(runs.nextRun()[0]);
+    System.out.println(runs.nextRun()[0]);
+    System.out.println(runs.nextRun()[0]);
+    System.out.println(runs.nextRun()[1]); //Should be null
+    System.out.println();
+
+    runs.restartRuns();
+    System.out.println(runs.nextRun()[0]);
+    System.out.println(runs.nextRun()[0]);
+    System.out.println(runs.nextRun()[0]);
+    System.out.println(runs.nextRun()[0]);
+    System.out.println(runs.nextRun()[0]);
+    System.out.println(runs.nextRun()[1]); //Should be null
+    System.out.println();
+
   }
 
 }

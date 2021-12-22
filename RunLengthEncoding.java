@@ -33,7 +33,8 @@ public class RunLengthEncoding {
    */
   public static DoublyLinkedList runs;
   private DListNode first, first1, curr;
-  private int width, height, starveTime, counter = 0;
+  private int width, height, starveTime, counter = 0, currentHunger;
+  private Ocean ocean;
 
   /**
    *  The following methods are required for Part II.
@@ -74,13 +75,10 @@ public class RunLengthEncoding {
    */
 
   public RunLengthEncoding(int i, int j, int sT, int[] runTypes, int[] runLengths) {
-    DoublyLinkedList runs = new DoublyLinkedList();
+    runs = new DoublyLinkedList();
     starveTime = sT;
     width = i;
     height = j;
-    first = runs.front();
-    first1 = runs.front();
-    curr = runs.front();
 
     for(int c = 0; c < runTypes.length; c++) {
       if(runTypes[c] == Ocean.EMPTY) {
@@ -94,10 +92,13 @@ public class RunLengthEncoding {
       }
     }
 
-    printRunLengthEncoding(runs);
-    check(runs);
+    first = runs.front();
+    first1 = runs.front();
+    curr = runs.front();
 
-    //System.out.println(runs);
+    printRunLengthEncoding(runs);
+    //check(runs);
+
 
 
 
@@ -148,27 +149,25 @@ public class RunLengthEncoding {
 
   public int[] nextRun() {
     // Replace the following line with your solution.
-    int[] nullArr = new int[2]; //Index 1 equalling 0 denotes a NULL cell {3,0}
-    nullArr[0] = 3;
-    nullArr[1] = 0;
 
     counter++;
-    curr = curr.getNext();
-    System.out.println("run #" + counter + " " + curr.getValue());
+   // System.out.println("run #" + counter + " " + curr.getValue());
     Ocean.Cell currCell = (Ocean.Cell) curr.getValue();
+    curr = curr.getNext();
 
-    if(currCell != null) {
+
+    if(currCell != null && curr != null) {
       int[] arr = new int[2];
 
       arr[0] = currCell.getType();
       arr[1] = currCell.quantity;
 
-
       return arr;
     }
     else {
-      return nullArr;
+      return null;
     }
+
   }
 
   /**
@@ -179,8 +178,46 @@ public class RunLengthEncoding {
    */
 
   public Ocean toOcean() {
-    // Replace the following line with your solution.
-    return new Ocean(1, 1, 1);
+    ocean = new Ocean(width, height, starveTime);
+    int rleIndexCounter = 0;
+
+    Ocean.Cell[][] arr = new Ocean.Cell[height][width];
+
+    for(int h = 0; h < height; h++) { //Sets all cells to empty cells
+      for(int w = 0; w < width; w++) {
+        arr[h][w] = new Ocean.Cell();
+      }
+    }
+
+    ocean.setCurrentArr(arr);
+
+    DListNode currNode = runs.front(); //FIX THIS: runs (dll) is null
+    Ocean.Cell currCell = (Ocean.Cell) currNode.getValue();
+
+    for(int c = 0; c < runs.length(); c++) { //Iterates through every run in the DLL of runs
+      currCell = (Ocean.Cell) currNode.getValue();
+      currNode = currNode.getNext();
+
+      int q = currCell.quantity;
+
+      if(currCell.getType() == Ocean.SHARK) {
+        currentHunger = currCell.getHunger();
+      }
+      else {
+        //currentHunger = (Integer) null;
+      }
+
+      for(int i = 0; i < q; q++) {
+
+      }
+
+
+
+    }
+
+
+
+    return ocean;
   }
 
   /**
@@ -218,8 +255,17 @@ public class RunLengthEncoding {
   public void addFish(int x, int y) {
     // Your solution here, but you should probably leave the following line
     //   at the end.
+    ocean.addFish(x, y);
     check(runs);
   }
+
+  public int[] wrap(int i) {
+    int arr[] = new int[2];
+    arr[0] = (int) Math.floor(i - 1 / height); //Y CORD
+    arr[1] = (i - 1) % width; //X CORD
+    return arr;
+  }
+
 
   /**
    *  addShark() (with two parameters) places a newborn shark in cell (x, y) if
@@ -235,6 +281,7 @@ public class RunLengthEncoding {
   public void addShark(int x, int y) {
     // Your solution here, but you should probably leave the following line
     //   at the end.
+    ocean.addShark(x, y, currentHunger);
     check(runs);
   }
 
@@ -246,25 +293,46 @@ public class RunLengthEncoding {
 
   private void check(DoublyLinkedList dll) {
     DListNode currNode = dll.front();
-    System.out.println(dll);
+    DListNode nextNode = currNode.getNext();
+
     Ocean.Cell currCell = (Ocean.Cell) currNode.getValue();
     Ocean.Cell nextCell = (Ocean.Cell) currNode.getNext().getValue();
     int counter = 0;
+    boolean correct = true;
 
-    //Checks to ensure the proper amount of runs
+    //Checks to ensure the proper amount of runs and that no two cells are correct
     for(int c = 0; c < dll.length(); c++) {
       currCell = (Ocean.Cell) currNode.getValue();
-      currNode = currNode.getNext();
+      currNode = currNode.getNext(); //Increments the node in runs
+
+      nextCell = (Ocean.Cell) nextNode.getValue();
+      nextNode = nextNode.getNext(); //Increments the node in runs
+
       counter = counter + currCell.quantity;
+
+      if(nextCell != null) {
+        if (currCell.getType() == nextCell.getType()) { //Ensures that no two runs are the same
+          correct = false;
+        }
+      }
     }
-    System.out.println("There are " + counter + " runs. There should be " + (width * height) + " runs.");
 
+    if(counter != (width * height)) { //Ensures that the RLE has proper ammount of runs
+      System.out.println("There are " + runs.length() + " runs. There should be " + (this.width * this.height));
+      correct = false;
+    }
 
+    if(runs == null) {
+      correct = false;
+    }
 
-
+    System.out.println("RLE is correct: " + correct);
 
   }
 
+  public DoublyLinkedList getRuns() {
+    return runs;
+  }
 
   public void printRunLengthEncoding(DoublyLinkedList dll) {
     //System.out.println(dll);

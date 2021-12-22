@@ -441,6 +441,10 @@ public class Ocean {
 
   public void addShark(int x, int y, int feeding) {
     // Your solution here.
+    if(currentArr[y][x].getType() == EMPTY || currentArr[y][x].getType() == FISH) {
+      currentArr[y][x] =  new Shark(feeding);
+
+    }
   }
 
   /**

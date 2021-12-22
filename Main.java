@@ -3,33 +3,20 @@ public class Main {
   public static void main(String[] args) {
     System.out.println("Testing RLE");
 
-    Ocean.Cell[][] arr = {{new Ocean.Cell(), new Ocean.Cell(), new Ocean.Fish()},
+    Ocean.Cell[][] arr = {{new Ocean.Fish(), new Ocean.Fish(), new Ocean.Fish()},
+                          {new Ocean.Shark(), new Ocean.Shark(), new Ocean.Shark()},
                           {new Ocean.Shark(), new Ocean.Shark(), new Ocean.Cell()},
-                          {new Ocean.Cell(), new Ocean.Cell(), new Ocean.Fish()}
+                          {new Ocean.Cell(), new Ocean.Cell(), new Ocean.Cell()}
                          };
-    int[] arr1 = {Ocean.EMPTY, Ocean.FISH, Ocean.SHARK, Ocean.EMPTY, Ocean.FISH};
-    int[] arr2 = {2, 1, 2, 3 , 1};
+    int[] rT = {Ocean.FISH, Ocean.SHARK, Ocean.EMPTY};
+    int[] rL = {3, 5, 4};
 
 
     Ocean sea = new Ocean(3, 3, 3);
-    RunLengthEncoding runs = new RunLengthEncoding(3,3, 3, arr1, arr2);
+    RunLengthEncoding rle = new RunLengthEncoding(3,3, 3, rT, rL);
 
-    System.out.println(runs.nextRun()[0]);
-    System.out.println(runs.nextRun()[0]);
-    System.out.println(runs.nextRun()[0]);
-    System.out.println(runs.nextRun()[0]);
-    System.out.println(runs.nextRun()[0]);
-    System.out.println(runs.nextRun()[1]); //Should be null
-    System.out.println();
+   System.out.println("TEST: " + rle.wrap(6)[0] + " " + rle.wrap(5)[1]);;
 
-    runs.restartRuns();
-    System.out.println(runs.nextRun()[0]);
-    System.out.println(runs.nextRun()[0]);
-    System.out.println(runs.nextRun()[0]);
-    System.out.println(runs.nextRun()[0]);
-    System.out.println(runs.nextRun()[0]);
-    System.out.println(runs.nextRun()[1]); //Should be null
-    System.out.println();
 
   }
 

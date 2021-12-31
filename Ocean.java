@@ -418,8 +418,9 @@ public class Ocean {
     return Math.floorMod(y, height);
   }
 
-
-
+  public Cell[][] getCurrentArr() {
+    return currentArr;
+  }
 
   /**
    *  The following method is required for Part II.

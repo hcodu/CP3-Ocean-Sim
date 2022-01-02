@@ -65,8 +65,6 @@ public class Ocean {
         currentArr[h][w] = new Cell();
       }
     }
-
-
   }
 
   /**
@@ -443,7 +441,7 @@ public class Ocean {
   public void addShark(int x, int y, int feeding) {
     // Your solution here.
     if(currentArr[y][x].getType() == EMPTY || currentArr[y][x].getType() == FISH) {
-      currentArr[y][x] =  new Shark(feeding);
+      currentArr[y][x] = new Shark(feeding);
 
     }
   }
@@ -466,7 +464,37 @@ public class Ocean {
 
   public int sharkFeeding(int x, int y) {
     // Replace the following line with your solution.
-    return 0;
+    return currentArr[y][x].quantity;
+  }
+
+  public void printArr() {
+    int width = this.width();
+    int height = this.height();
+
+    for (int x = 0; x < width + 2; x++) {
+      System.out.print("-");
+    }
+    System.out.println();
+    for (int y = 0; y < height; y++) {
+      System.out.print("|");
+      for (int x = 0; x < width; x++) {
+        int contents = this.cellContents(x, y);
+        if (contents == Ocean.SHARK) {
+          System.out.print('S');
+        }
+        else if (contents == Ocean.FISH) {
+          System.out.print('~');
+        }
+        else {
+          System.out.print('.');
+        }
+      }
+      System.out.println("|");
+    }
+    for (int x = 0; x < width + 2; x++) {
+      System.out.print("-");
+    }
+    System.out.println();
   }
 
 
@@ -508,7 +536,7 @@ public class Ocean {
     }
 
     public Shark(int q) {
-      super(q);
+      quantity = q;
     }
 
     public int getQuantity() {
@@ -539,7 +567,7 @@ public class Ocean {
     }
 
     public Fish(int q) {
-      super(q);
+      quantity = q;
     }
 
     public int getQuantity() {

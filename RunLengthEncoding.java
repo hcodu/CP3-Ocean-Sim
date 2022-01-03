@@ -151,10 +151,13 @@ public class RunLengthEncoding {
    */
 
   public int[] nextRun() {
-    // Replace the following line with your solution.
-
     counter++;
     System.out.print("run #" + (counter - 1) + " " + curr.getValue());
+
+    if(curr.getValue() == null) {
+      System.out.println();
+      System.out.println();
+    }
 
     Ocean.Cell currCell = (Ocean.Cell) curr.getValue();
 
@@ -162,18 +165,17 @@ public class RunLengthEncoding {
       System.out.print(" of quantity " + currCell.getQuantity() + "\n");
     }
 
-    curr = curr.getNext();
-
-
       if (currCell != null && curr != null) {
         int[] arr = new int[2];
 
         arr[0] = currCell.getType();
         arr[1] = currCell.getQuantity();
+        curr = curr.getNext();
 
         return arr;
       }
       else {
+        curr = curr.getNext();
         return null;
       }
 
@@ -186,7 +188,7 @@ public class RunLengthEncoding {
    *  @return the Ocean represented by a run-length encoding.
    */
 
-  public Ocean toOcean() { //toOcean currently isn't converting properly for part III (Wrap is the issue)
+  public Ocean toOcean() {
     Ocean sea = new Ocean(width, height, starveTime); //Creates new ocean from 3 parameter constructor
     int rleIndexCounter = 0; //Indexes the count of cells in the RLE
 
@@ -202,17 +204,15 @@ public class RunLengthEncoding {
 
       for(int i = 0; i < q; i++) {
         int[] cords = wrap(rleIndexCounter); //Converts the RLE cord to an arr cords
-        //System.out.println("rleIndex: " + rleIndexCounter + " XY " + cords[1] + "," + cords[0]);
         if(currCell.getType() == Ocean.SHARK) {
           int hunger = currCell.getHunger();
           sea.addShark(cords[1], cords[0], hunger); //Adds shark using the arr cords
-          System.out.println("RLE: " + rleIndexCounter + " XY: " + cords[1] + "," + cords[0] + " Added a: " + sea.cellContents(cords[1], cords[0]));
+          //System.out.println("RLE: " + rleIndexCounter + " XY: " + cords[1] + "," + cords[0] + " Added a: " + sea.cellContents(cords[1], cords[0]));
         }
         else if(currCell.getType() == Ocean.FISH) {
           sea.addFish(cords[1], cords[0]); //Adds fish using the arr cords
-          System.out.println("RLE: " + rleIndexCounter + " XY: " + cords[1] + "," + cords[0] + " Added a: " + sea.cellContents(cords[1], cords[0]));
+          //System.out.println("RLE: " + rleIndexCounter + " XY: " + cords[1] + "," + cords[0] + " Added a: " + sea.cellContents(cords[1], cords[0]));
         }
-        //System.out.println("RLE: " + rleIndexCounter + " XY: " + cords[1] + "," + cords[0] + " Type: " + sea.cellContents(cords[1], cords[0]));
 
         rleIndexCounter++; //Increments the total run counter
       }
@@ -236,6 +236,16 @@ public class RunLengthEncoding {
     // Your solution here, but you should probably leave the following line
     //   at the end.
     sea.printArr();
+    Ocean.Cell[][] arr = sea.getCurrentArr();
+    int c = 0;
+
+    for(int y = 0; y < arr.length; y++) {
+      for(int x = 0; x < arr[0].length; x++) {
+        //System.out.println("Count: " + c + " " + arr[y][x]);
+        //c++;
+      }
+    }
+
     height = sea.height();
     width = sea.width();
     starveTime = sea.starveTime();
@@ -287,19 +297,34 @@ public class RunLengthEncoding {
     int[] rT = rTList.stream().mapToInt(i -> i).toArray();
     int[] rL = rLList.stream().mapToInt(i -> i).toArray();
 
-//    for(int i = 0; i < rT.length; i++) {
-//      System.out.println(rT[i] + "\t" + rL[i]);
-//    }
+//    rL[12] = 1;
+//    rT[13] = 1;
+//    rT[14] = 2;
+//    rL[14] = 2;
+//    rT[15] = 1;
+//    rL[15] = 3;
+    //Something is wrong with the built in teste
 
     new RunLengthEncoding(width, height, starveTime, rT, rL);
+
+//    for(int i = 0; i < rT.length; i++) {
+//      System.out.println("run #" + i + " " + rT[i] + ", " + rL[i]);
+//    }
+
 
     first = runs.front();
     first1 = runs.front();
     curr = runs.front();
 
+
     printRunLengthEncoding(runs);
 
-    check(runs);
+    int[] runArr = getRun(81);
+    if(runArr != null) {
+      System.out.println(runArr[0] + " " + runArr[1]);
+    }
+
+    //check(runs);
   }
 
   /**
@@ -314,7 +339,6 @@ public class RunLengthEncoding {
    *  @param x is the x-coordinate of the cell to place a fish in.
    *  @param y is the y-coordinate of the cell to place a fish in.
    */
-
   public void addFish(int x, int y) {
     // Your solution here, but you should probably leave the following line
     //   at the end.
@@ -332,7 +356,6 @@ public class RunLengthEncoding {
    *  @param x is the x-coordinate of the cell to place a shark in.
    *  @param y is the y-coordinate of the cell to place a shark in.
    */
-
   public void addShark(int x, int y) {
     // Your solution here, but you should probably leave the following line
     //   at the end.
@@ -340,11 +363,10 @@ public class RunLengthEncoding {
     check(runs);
   }
 
-  /** Converts RLE index to array cordinates.
+  /** wrap() converts RLE index to array cordinates.
    * @param i is the RLE Index (element count).
    * @return arr is the 2 element array with the cordinates {Y, X}.
    */
-
   public int[] wrap(int i) { //0 is y cord, 1 is x cord
     int arr[] = new int[2];
     int c = 0;
@@ -388,7 +410,6 @@ public class RunLengthEncoding {
     for(int c = 0; c < dll.length(); c++) {
       currCell = (Ocean.Cell) currNode.getValue();
       currNode = currNode.getNext(); //Increments the node in runs
-
       nextCell = (Ocean.Cell) nextNode.getValue();
       nextNode = nextNode.getNext(); //Increments the node in runs
 
@@ -438,6 +459,25 @@ public class RunLengthEncoding {
     }
     System.out.println(result);
 
+  }
+
+
+  /** getRun() returns the 1d array of a "run" from nextRun() of a specific
+   * rleIndex of the RLE. The first element of the array is the type and the second
+   * is the quantity. Runs are indexed from 0
+   * */
+
+  public int[] getRun(int r) {
+    int[] arr = new int[2];
+    DListNode run = runs.front();
+    for(int i = 0; i < r; i++) {
+      arr = nextRun();
+    }
+    arr = nextRun();
+
+    restartRuns();
+
+    return arr;
   }
 
 }

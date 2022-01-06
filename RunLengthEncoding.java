@@ -89,13 +89,13 @@ public class RunLengthEncoding {
 
     for(int c = 0; c < runTypes.length; c++) {
       if(runTypes[c] == Ocean.EMPTY) {
-        runs.insertBack(new Ocean.Cell(runLengths[c]));
+        runs.insertBack(new Ocean.Cell(runLengths[c], runTypes[c]));
       }
       else if(runTypes[c] == Ocean.FISH) {
-        runs.insertBack(new Ocean.Fish(runLengths[c]));
+        runs.insertBack(new Ocean.Cell(runLengths[c], runTypes[c]));
       }
       else if(runTypes[c] == Ocean.SHARK) {
-        runs.insertBack(new Ocean.Shark(runLengths[c]));
+        runs.insertBack(new Ocean.Cell(runLengths[c], runTypes[c]));
       }
     }
 
@@ -297,7 +297,7 @@ public class RunLengthEncoding {
     int[] rT = rTList.stream().mapToInt(i -> i).toArray();
     int[] rL = rLList.stream().mapToInt(i -> i).toArray();
 
-    rL[12] = 1;
+//    rL[12] = 1;
 //    rT[13] = 1;
 //    rT[14] = 2;
 //    rL[14] = 2;

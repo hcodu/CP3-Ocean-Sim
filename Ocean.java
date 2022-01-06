@@ -62,7 +62,7 @@ public class Ocean {
 
     for(int h = 0; h < height; h++) {
       for(int w = 0; w < width; w++) {
-        currentArr[h][w] = new Cell();
+        currentArr[h][w] = new Cell(1);
       }
     }
   }
@@ -116,7 +116,7 @@ public class Ocean {
   public void addFish(int x, int y) {
     // Your solution here.
     if(currentArr[y][x].getType() == EMPTY) {
-      this.currentArr[y][x] = new Fish();
+      this.currentArr[y][x] = new Fish(1);
     }
 
   }
@@ -132,7 +132,7 @@ public class Ocean {
   public void addShark(int x, int y) {
     // Your solution here.
     if(currentArr[y][x].getType() == EMPTY || currentArr[y][x].getType() == FISH) {
-      currentArr[y][x] =  new Shark();
+      currentArr[y][x] =  new Shark(1);
     }
   }
 
@@ -405,7 +405,7 @@ public class Ocean {
   }
 
   public void emptyCell(int x, int y) {
-    currentArr[y][x] = new Cell();
+    currentArr[y][x] = new Cell(1);
   }
 
   public int normalizeX(int x) { //Link top and bottom edges like torus
@@ -501,12 +501,11 @@ public class Ocean {
   public static class Cell extends Object { //represents empty cell
     int quantity;
 
-    public Cell() {
-      quantity = 1;
-    }
-
     public Cell(int q) {
       quantity = q;
+    }
+
+    public Cell() {
     }
 
     public int getType() {
@@ -530,10 +529,6 @@ public class Ocean {
   public static class Shark extends Cell {
     public int hunger = 0; // 0 = fed, goes up as timeSteps without food increase
     int quantity;
-
-    public Shark() {
-      super();
-    }
 
     public Shark(int q) {
       quantity = q;
@@ -561,10 +556,6 @@ public class Ocean {
   }
   public static class Fish extends Cell {
     int quantity;
-
-    public Fish() {
-      super();
-    }
 
     public Fish(int q) {
       quantity = q;

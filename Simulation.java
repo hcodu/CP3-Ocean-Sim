@@ -41,8 +41,8 @@ public class Simulation {
    *  Default parameters.  (You may change these if you wish.)
    */
 
-  private static int i = 80;                             // Default ocean width
-  private static int j = 80;                            // Default ocean height
+  private static int i = 80 * 2;                             // Default ocean width
+  private static int j = 80 * 2;                            // Default ocean height
   private static int starveTime = 3;           // Default shark starvation time
 
   private static void drawOcean(Graphics graphics, Ocean ocean) {

@@ -3,10 +3,10 @@ public class Main {
   public static void main(String[] args) {
     System.out.println("Testing RLE");
 
-    Ocean.Cell[][] arr = {{new Ocean.Fish(), new Ocean.Fish(), new Ocean.Fish()},
-                          {new Ocean.Shark(), new Ocean.Shark(), new Ocean.Shark()},
-                          {new Ocean.Shark(), new Ocean.Shark(), new Ocean.Cell()},
-                          {new Ocean.Cell(), new Ocean.Fish(), new Ocean.Cell()}
+    Ocean.Cell[][] arr = {{new Ocean.Fish(1), new Ocean.Fish(1), new Ocean.Fish(1)},
+                          {new Ocean.Shark(1), new Ocean.Shark(1), new Ocean.Shark(1)},
+                          {new Ocean.Shark(1), new Ocean.Shark(1), new Ocean.Cell(1)},
+                          {new Ocean.Cell(1), new Ocean.Fish(1), new Ocean.Cell(1)}
                          };
 
     int[] rT = {Ocean.FISH, Ocean.EMPTY, Ocean.FISH, Ocean.EMPTY, Ocean.FISH, Ocean.EMPTY, Ocean.SHARK, Ocean.EMPTY, Ocean.FISH, Ocean.EMPTY, Ocean.SHARK, Ocean.EMPTY, Ocean.SHARK};

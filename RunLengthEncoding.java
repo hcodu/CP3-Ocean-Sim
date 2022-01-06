@@ -297,7 +297,7 @@ public class RunLengthEncoding {
     int[] rT = rTList.stream().mapToInt(i -> i).toArray();
     int[] rL = rLList.stream().mapToInt(i -> i).toArray();
 
-//    rL[12] = 1;
+    rL[12] = 1;
 //    rT[13] = 1;
 //    rT[14] = 2;
 //    rL[14] = 2;

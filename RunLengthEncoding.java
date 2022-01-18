@@ -165,19 +165,19 @@ public class RunLengthEncoding {
       System.out.print(" of quantity " + currCell.getQuantity() + "\n");
     }
 
-      if (currCell != null && curr != null) {
-        int[] arr = new int[2];
+    if (currCell != null && curr != null) {
+      int[] arr = new int[2];
 
-        arr[0] = currCell.getType();
-        arr[1] = currCell.getQuantity();
-        curr = curr.getNext();
+      arr[0] = currCell.getType();
+      arr[1] = currCell.getQuantity();
+      curr = curr.getNext();
 
-        return arr;
-      }
-      else {
-        curr = curr.getNext();
-        return null;
-      }
+      return arr;
+    }
+    else {
+      curr = curr.getNext();
+      return null;
+    }
 
   }
 

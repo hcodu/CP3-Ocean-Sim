@@ -1,3 +1,4 @@
+
 package DoublyLinkedList;
 
 public class DListNode {
@@ -16,7 +17,7 @@ public class DListNode {
 
     /**
      *  DListNode() constructor.
-     *  @param i the item to store in the node.
+     *  @param o the item to store in the node.
      *  @param p the node previous to this node.
      *  @param n the node following this node.
      */

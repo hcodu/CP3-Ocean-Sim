@@ -35,14 +35,14 @@ public class Simulation {
    *  during animation.  (You may change this if you wish.)
    */
 
-  private static final int cellSize = 4;
+  private static final int cellSize = 6;
 
   /**
    *  Default parameters.  (You may change these if you wish.)
    */
 
-  private static int i = 80 * 2;                             // Default ocean width
-  private static int j = 80 * 2;                            // Default ocean height
+  private static int i = 80;                             // Default ocean width
+  private static int j = 80;                            // Default ocean height
   private static int starveTime = 3;           // Default shark starvation time
 
   private static void drawOcean(Graphics graphics, Ocean ocean) {
@@ -54,10 +54,10 @@ public class Simulation {
         for (int x = 0; x < width; x++) {
           int contents = ocean.cellContents(x, y);
           if (contents == Ocean.SHARK) {
-            graphics.setColor(Color.red);                   // Draw a red shark
+            graphics.setColor(Color.gray);                   // Draw a red shark
             graphics.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
           } else if (contents == Ocean.FISH) {
-            graphics.setColor(Color.green);                // Draw a green fish
+            graphics.setColor(Color.orange);
             graphics.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
           } else {
             graphics.clearRect(x * cellSize, y * cellSize, cellSize, cellSize);

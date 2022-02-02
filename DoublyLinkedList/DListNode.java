@@ -11,18 +11,20 @@ public class DListNode {
      *  DO NOT CHANGE THE FOLLOWING FIELD DECLARATIONS.
      */
 
-    public Object obj;
+    public int quantity, type, hunger;
     protected DListNode prev;
     protected DListNode next;
 
     /**
      *  DListNode() constructor.
-     *  @param o the item to store in the node.
+     *  @param q the quantity to store in the node.
      *  @param p the node previous to this node.
      *  @param n the node following this node.
      */
-    DListNode(Object o, DListNode p, DListNode n) {
-        obj = o;
+    DListNode(int q, int t, int h , DListNode p, DListNode n) {
+        quantity = q;
+        type = t;
+        hunger = h;
         prev = p;
         next = n;
     }
@@ -32,7 +34,14 @@ public class DListNode {
     public DListNode getPrev() {
         return prev;
     }
-    public Object getValue() {
-        return obj;
+
+    public int getQuantity() {
+        return quantity;
+    }
+    public int getType() {
+        return type;
+    }
+    public int getHunger() {
+        return hunger;
     }
 }

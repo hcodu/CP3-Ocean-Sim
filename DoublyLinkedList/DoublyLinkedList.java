@@ -38,20 +38,20 @@ public class DoublyLinkedList {
      *  new DListNodes rather than calling the DListNode constructor directly.
      *  That way, only this method needs to be overridden if a subclass of DList
      *  wants to use a different kind of node.
-     *  @param item the item to store in the node.
+     *  @param q the item to store in the node.
      *  @param prev the node previous to this node.
      *  @param next the node following this node.
      */
-    protected DListNode newNode(Object item, DListNode prev, DListNode next) {
+    protected DListNode newNode(int q, int t, int h, DListNode prev, DListNode next) {
         this.size++;
-        return new DListNode(item, prev, next);
+        return new DListNode(q, t, h, prev, next);
     }
 
     /**
      *  DList() constructor for an empty DList.
      */
     public DoublyLinkedList() {
-        this.head = newNode(null, null, null);
+        this.head = newNode(0, 0, 0, null, null);
         this.head.prev = this.head;
         this.head.next = this.head;
         this.size = 0;
@@ -77,22 +77,22 @@ public class DoublyLinkedList {
 
     /**
      *  insertFront() inserts an item at the front of this DList.
-     *  @param item is the item to be inserted.
+     *  @param q is the item to be inserted.
      *  Performance:  runs in O(1) time.
      */
-    public void insertFront(Object item) {
+    public void insertFront(int q, int t, int h) {
         // Your solution here.
-        insertAfter(item, this.head);
+        insertAfter(q, h, t, this.head);
 
     }
 
     /**
      *  insertBack() inserts an item at the back of this DList.
-     *  @param item is the item to be inserted.
+     *  @param q is the item to be inserted.
      *  Performance:  runs in O(1) time.
      */
-    public void insertBack(Object item) {
-        insertBefore(item, this.head);
+    public void insertBack(int q, int t, int h) {
+        insertBefore(q, t, h, this.head);
     }
 
 
@@ -156,14 +156,14 @@ public class DoublyLinkedList {
     /**
      *  insertAfter() inserts an item in this DList immediately following "node".
      *  If "node" is null, do nothing.
-     *  @param item the item to be inserted.
+     *  @param q the item to be inserted.
      *  @param node the node to insert the item after.
      *  Performance:  runs in O(1) time.
      */
-    public void insertAfter(Object item, DListNode node) {
+    public void insertAfter(int q, int t, int h, DListNode node) {
         // Your solution here.
         if(node != null) {
-            DListNode nodeNew = newNode(item, node, next(node));
+            DListNode nodeNew = newNode(q, t, h, node, next(node));
             next(node).prev = nodeNew;
             node.next = nodeNew;
         }
@@ -172,14 +172,14 @@ public class DoublyLinkedList {
     /**
      *  insertBefore() inserts an item in this DList immediately before "node".
      *  If "node" is null, do nothing.
-     *  @param item the item to be inserted.
+     *  @param q the item to be inserted.
      *  @param node the node to insert the item before.
      *  Performance:  runs in O(1) time.
      */
-    public void insertBefore(Object item, DListNode node) {
+    public void insertBefore(int q, int t, int h, DListNode node) {
         // Your solution here.
         if(node != null) {
-            DListNode nodeNew = newNode(item, prev(node), node);
+            DListNode nodeNew = newNode(q, t, h, prev(node), node);
             prev(node).next = nodeNew;
             node.prev = nodeNew;
         }
@@ -210,7 +210,7 @@ public class DoublyLinkedList {
         String result = "[  ";
         DListNode current = head.next;
         while (current != head) {
-            result = result + current.getValue() + "  ";
+            result = result + current.getType() + "  ";
             current = current.next;
         }
         return result + "]";

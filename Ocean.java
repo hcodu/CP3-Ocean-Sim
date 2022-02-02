@@ -62,7 +62,7 @@ public class Ocean {
 
     for(int h = 0; h < height; h++) {
       for(int w = 0; w < width; w++) {
-        currentArr[h][w] = new Cell(1);
+        currentArr[h][w] = new Cell(1, EMPTY);
       }
     }
   }
@@ -116,7 +116,7 @@ public class Ocean {
   public void addFish(int x, int y) {
     // Your solution here.
     if(currentArr[y][x].getType() == EMPTY) {
-      this.currentArr[y][x] = new Fish(1);
+      this.currentArr[y][x] = new Cell(1, FISH);
     }
 
   }
@@ -132,7 +132,7 @@ public class Ocean {
   public void addShark(int x, int y) {
     // Your solution here.
     if(currentArr[y][x].getType() == EMPTY || currentArr[y][x].getType() == FISH) {
-      currentArr[y][x] =  new Shark(1);
+      currentArr[y][x] =  new Cell(1, SHARK);
     }
   }
 
@@ -357,7 +357,7 @@ public class Ocean {
   }
 
   public void emptyCell(int x, int y) {
-    currentArr[y][x] = new Cell(1);
+    currentArr[y][x] = new Cell(1, EMPTY);
   }
 
   public int normalizeX(int x) { //Link top and bottom edges like torus
@@ -393,7 +393,7 @@ public class Ocean {
   public void addShark(int x, int y, int feeding) {
     // Your solution here.
     if(currentArr[y][x].getType() == EMPTY || currentArr[y][x].getType() == FISH) {
-      currentArr[y][x] = new Shark(feeding);
+      currentArr[y][x] = new Cell(1, SHARK, feeding);
 
     }
   }
@@ -452,38 +452,25 @@ public class Ocean {
 
   public static class Cell extends Object { //represents empty cell
     int quantity;
+    int type;
+    int hunger;
 
-    public Cell(int q) {
+    public Cell(int q, int t) {
       quantity = q;
+      type = t;
+      hunger = 0;
+    }
+    public Cell(int q, int t, int h) {
+      quantity = q;
+      type = t;
+      hunger = h;
     }
 
     public Cell() {
     }
 
     public int getType() {
-      return EMPTY;
-    }
-
-    public int getQuantity() {
-      return quantity;
-    }
-
-    public void increaseHunger() {
-      increaseHunger();
-    }
-    public void resetHunger() {
-      resetHunger();
-    }
-    public int getHunger() {
-      return getHunger();
-    }
-  } //Defines empty cells, sharks, and fish as objects
-  public static class Shark extends Cell {
-    public int hunger = 0; // 0 = fed, goes up as timeSteps without food increase
-    int quantity;
-
-    public Shark(int q) {
-      quantity = q;
+      return type;
     }
 
     public int getQuantity() {
@@ -493,33 +480,13 @@ public class Ocean {
     public void increaseHunger() {
       hunger++;
     }
-
-
     public void resetHunger() {
       hunger = 0;
     }
     public int getHunger() {
       return hunger;
     }
+  } //Defines empty cells, sharks, and fish as objects
 
-    public int getType() {
-      return SHARK;
-    }
-  }
-  public static class Fish extends Cell {
-    int quantity;
-
-    public Fish(int q) {
-      quantity = q;
-    }
-
-    public int getQuantity() {
-      return quantity;
-    }
-
-    public int getType() {
-      return FISH;
-    }
-  }
 
 }

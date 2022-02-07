@@ -284,17 +284,15 @@ public class RunLengthEncoding {
       }
     }
 
+    //Try doing this in a for loop??
     //Converts the array lists to arrays
     int[] rT = rTList.stream().mapToInt(i -> i).toArray();
     int[] rL = rLList.stream().mapToInt(i -> i).toArray();
 
-//    rL[12] = 1;
-//    rT[13] = 1;
-//    rT[14] = 2;
-//    rL[14] = 2;
-//    rT[15] = 1;
-//    rL[15] = 3;
-    //Something is wrong with the built in teste
+
+    //Something is wrong with the built in tester
+
+
 
     new RunLengthEncoding(width, height, starveTime, rT, rL);
 
@@ -350,7 +348,9 @@ public class RunLengthEncoding {
   public void addShark(int x, int y) {
     // Your solution here, but you should probably leave the following line
     //   at the end.
-    ocean.addShark(x, y, currentHunger);
+    Ocean newOcean = this.toOcean();
+    newOcean.addShark(x, y, currentHunger);
+
     check(runs);
   }
 
